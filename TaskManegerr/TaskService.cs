@@ -10,7 +10,6 @@ namespace TaskManegerr
 
         public TaskService()
         {
-            // Инициализация данных
             _tasks = new List<TaskModel>();
             _categories = new List<TaskCategoryModel>
             {
@@ -22,13 +21,13 @@ namespace TaskManegerr
 
         public async Task<IEnumerable<TaskModel>> GetTasksAsync()
         {
-            await Task.Delay(2000); // Имитация задержки 2 секунды
+            await Task.Delay(2000);
             return _tasks;
         }
 
         public async Task<IEnumerable<TaskCategoryModel>> GetCategoriesAsync()
         {
-            await Task.Delay(2000); // Имитация задержки 2 секунды
+            await Task.Delay(2000);
             return _categories;
         }
 
