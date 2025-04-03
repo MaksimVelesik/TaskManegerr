@@ -4,7 +4,6 @@
         Title="Менеджер задач" Height="450" Width="800">
 
     <Window.Resources>
-        <!-- Добавляем стандартный конвертер для преобразования Boolean в Visibility -->
         <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
     </Window.Resources>
 
@@ -33,25 +32,21 @@
         </Menu>
 
         <StackPanel Grid.Row="1" Margin="0,20,0,0">
-            <!-- Кнопки для управления задачами -->
             <StackPanel Orientation="Horizontal">
                 <Button Command="{Binding AddTaskCommand}" Content="Добавить задачу" Margin="5"/>
                 <Button Command="{Binding EditTaskCommand}" Content="Редактировать задачу" Margin="5"/>
                 <Button Command="{Binding DeleteTaskCommand}" Content="Удалить задачу" Margin="5"/>
             </StackPanel>
 
-            <!-- Фильтры задач -->
             <StackPanel Orientation="Horizontal">
                 <Button Click="FilterAll_Click" Content="Все" Margin="5"/>
                 <Button Click="FilterInProgress_Click" Content="В работе" Margin="5"/>
                 <Button Click="FilterCompleted_Click" Content="Выполнено" Margin="5"/>
             </StackPanel>
 
-            <!-- Индикатор загрузки -->
             <TextBlock Text="Загрузка..." Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
             <ProgressBar IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
 
-            <!-- Список задач -->
             <ListView x:Name="taskListView" ItemsSource="{Binding Tasks}">
                 <ListView.View>
                     <GridView>
