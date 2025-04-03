@@ -1,0 +1,67 @@
+﻿<Window x:Class="TaskManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Менеджер задач" Height="450" Width="800">
+
+    <Window.Resources>
+        <!-- Добавляем стандартный конвертер для преобразования Boolean в Visibility -->
+        <BooleanToVisibilityConverter x:Key="BooleanToVisibilityConverter"/>
+    </Window.Resources>
+
+    <Window.InputBindings>
+        <KeyBinding Key="N" Modifiers="Control" Command="{Binding AddTaskCommand}"/>
+        <KeyBinding Key="E" Modifiers="Control" Command="{Binding EditTaskCommand}"/>
+        <KeyBinding Key="D" Modifiers="Control" Command="{Binding DeleteTaskCommand}"/>
+    </Window.InputBindings>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <Menu Grid.Row="0">
+            <MenuItem Header="Файл">
+                <MenuItem Header="Выход" Command="{Binding ExitCommand}"/>
+            </MenuItem>
+            <MenuItem Header="Задачи">
+                <MenuItem Header="Создать задачу" Command="{Binding AddTaskCommand}" InputGestureText="Ctrl+N"/>
+                <MenuItem Header="Редактировать задачу" Command="{Binding EditTaskCommand}" InputGestureText="Ctrl+E"/>
+                <MenuItem Header="Удалить задачу" Command="{Binding DeleteTaskCommand}" InputGestureText="Ctrl+D"/>
+            </MenuItem>
+            <MenuItem Header="Настройки"/>
+        </Menu>
+
+        <StackPanel Grid.Row="1" Margin="0,20,0,0">
+            <!-- Кнопки для управления задачами -->
+            <StackPanel Orientation="Horizontal">
+                <Button Command="{Binding AddTaskCommand}" Content="Добавить задачу" Margin="5"/>
+                <Button Command="{Binding EditTaskCommand}" Content="Редактировать задачу" Margin="5"/>
+                <Button Command="{Binding DeleteTaskCommand}" Content="Удалить задачу" Margin="5"/>
+            </StackPanel>
+
+            <!-- Фильтры задач -->
+            <StackPanel Orientation="Horizontal">
+                <Button Click="FilterAll_Click" Content="Все" Margin="5"/>
+                <Button Click="FilterInProgress_Click" Content="В работе" Margin="5"/>
+                <Button Click="FilterCompleted_Click" Content="Выполнено" Margin="5"/>
+            </StackPanel>
+
+            <!-- Индикатор загрузки -->
+            <TextBlock Text="Загрузка..." Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
+            <ProgressBar IsIndeterminate="True" Visibility="{Binding IsLoading, Converter={StaticResource BooleanToVisibilityConverter}}" />
+
+            <!-- Список задач -->
+            <ListView x:Name="taskListView" ItemsSource="{Binding Tasks}">
+                <ListView.View>
+                    <GridView>
+                        <GridViewColumn Header="Название" DisplayMemberBinding="{Binding Title}" Width="200"/>
+                        <GridViewColumn Header="Описание" DisplayMemberBinding="{Binding Description}" Width="200"/>
+                        <GridViewColumn Header="Приоритет" DisplayMemberBinding="{Binding Priority}" Width="80"/>
+                        <GridViewColumn Header="Статус" DisplayMemberBinding="{Binding Status}" Width="80"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
+        </StackPanel>
+    </Grid>
+</Window>
