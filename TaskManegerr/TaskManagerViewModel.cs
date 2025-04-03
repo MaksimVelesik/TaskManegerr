@@ -5,7 +5,7 @@ using TaskManager;
 
 namespace TaskManegerr
 {
-    public class TaskManagerViewModel : ViewModelBase // Предполагается, что ViewModelBase реализует INotifyPropertyChanged
+    public class TaskManagerViewModel : ViewModelBase 
     {
         private readonly TaskService _taskService;
 
@@ -29,7 +29,7 @@ namespace TaskManegerr
 
         private async void LoadDataAsync()
         {
-            await Task.Delay(2000); // Задержка 2 секунды
+            await Task.Delay(2000); 
 
             var tasks = await _taskService.GetTasksAsync();
             var categories = await _taskService.GetCategoriesAsync();
